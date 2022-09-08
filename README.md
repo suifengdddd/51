@@ -12,3 +12,9 @@
 
 [外设选择](https://gitee.com/zou-jinqiang/51/blob/master/LED/%E5%A4%96%E8%AE%BE%E9%80%89%E6%8B%A9.png)
 
+####  LED各文件夹说明
+>CODE--存放各个模块的.c文件，定义有各模块使用函数
+>INC--存放各个模块的.h文件，可以在这里查看模块函数用法
+>PRJ--工程文件和中间文件在这
+>SRC--存放main.c
+
