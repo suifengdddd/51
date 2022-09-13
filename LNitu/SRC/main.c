@@ -70,12 +70,15 @@ main()
 			 arr[1]=add/1000%10;
 			 arr[2]=add/100%10;
 			 arr[3]=add/10%10;
+			 c51_led.led_on(arr[0]/8);
 			 c51_nixie_tube.dynamic_display(1,4,arr);
        delayms(1);
 		   time_i++;
 			 if(time_i>1000)
 			 {
 				 time_i=0;
+				 c51_led.led_all_off();
+				 
 			 }
 			 if(add>10000)
 			 {
