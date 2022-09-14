@@ -1,0 +1,207 @@
+C51 COMPILER V9.54   MAIN                                                                  09/14/2022 18:43:14 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\ying_yong\keil5\C51\BIN\C51.EXE ..\SRC\main.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\INC) DEBUG OBJE
+                    -CTEXTEND PRINT(.\Listings\main.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include "STC51.h"
+   2          #if TIME_
+              create_time c51_time;
+              #endif
+   5          #if KEY_
+   6          create_key c51_key; 
+   7          #endif
+   8          #if LED_
+   9          create_led c51_led;
+  10          #endif
+  11          #if BEEP_
+              create_beep c51_beep;
+              #endif
+  14          #if SMG_
+  15          create_nixie_tube c51_nixie_tube;
+  16          
+  17          #endif
+  18          #if USART
+              create_usart c51_usart;
+              #endif
+  21          
+  22          main()
+  23          {
+  24   1        
+  25   1          int i=1;
+  26   1          int arr[3]={0};
+  27   1          int key_val=0;
+  28   1          
+  29   1          #if LED_
+  30   1          led_init(&c51_led);
+  31   1          #endif
+  32   1          #if KEY_
+  33   1          key_init(&c51_key);
+  34   1          #endif
+  35   1          #if BEEP_
+                  beep_init(&c51_beep);
+                  #endif
+  38   1          #if SMG_
+  39   1          nixie_tube_init(&c51_nixie_tube); 
+  40   1          #endif
+  41   1      #if TIME_ 
+                  //打开定时器0   
+                  c51_time.time0=TIME0OFF;
+                   //10ms一个中断
+                  c51_time.time0_ms=50;
+                  //关闭定时器1
+                  c51_time.time1=TIME1OFF;
+                  c51_time.time1_ms=50;
+                
+                  c51_time.time_type=0;
+                  time_init(&c51_time);
+              #endif
+  53   1        
+  54   1      #if USART
+C51 COMPILER V9.54   MAIN                                                                  09/14/2022 18:43:14 PAGE 2   
+
+                  //设置波特率为9600
+                  c51_usart.baud_rate=9600;
+                  usart_init(&c51_usart);
+              #endif    
+  59   1          c51_led.led_all_off();
+  60   1          
+  61   1        while(1)
+  62   1        {
+  63   2        
+  64   2      
+  65   2           c51_key.key=c51_key.whitch_key_down();
+  66   2      
+  67   2            if(c51_key.key!=0)
+  68   2            {
+  69   3               i++;
+  70   3              if(i>8)
+  71   3              {
+  72   4                    i=1;
+  73   4                   c51_led.led_off(8);
+  74   4              }
+  75   3            key_val=c51_key.key;
+  76   3            }
+  77   2            
+  78   2            c51_led.led_on(i);
+  79   2            c51_led.led_off(i-1);
+  80   2            arr[0]=(key_val-5)*(key_val-5)/100%10;
+  81   2            arr[1]=(key_val-5)*(key_val-5)/10%10;
+  82   2            arr[2]=(key_val-5)*(key_val-5)/1%10;
+  83   2            c51_nixie_tube.dynamic_display(1,3,arr);
+  84   2      
+  85   2        }
+  86   1          
+  87   1        
+  88   1      }
+  89          #if USART
+              void usart_rx_func_handle (void)
+              {
+                  unsigned  char  res;
+                  RI=0;
+                  c51_led.led_on(1);
+                  res =SBUF;
+                    if((c51_usart.USART_RX_STA&0x8000)==0)//接收未完成
+                  {
+                    if(c51_usart.USART_RX_STA&0x4000)//接收到了0x0d
+                    {
+                      if(res!=0x0a)c51_usart.USART_RX_STA=0;//接收错误,重新开始
+                      else c51_usart.USART_RX_STA|=0x8000;  //接收完成了 
+                    }else //还没收到0X0D
+                    { 
+                      if(res==0x0d)c51_usart.USART_RX_STA|=0x4000;
+                      else
+                      {
+                        c51_usart.USART_RX_BUF[c51_usart.USART_RX_STA&0X3FFF]=res;
+                        c51_usart.USART_RX_STA++;
+                        if(c51_usart.USART_RX_STA>(USART_REC_LEN-1))c51_usart.USART_RX_STA=0;//接收数据错误,重新开始接收    
+                      }    
+                    }
+                  }
+                       
+              }
+              #endif
+ 116          #if TIME_  
+C51 COMPILER V9.54   MAIN                                                                  09/14/2022 18:43:14 PAGE 3   
+
+              void time_run_func_handle(void)
+              {
+                 static int time0_i=0;
+                 static int time1_i=0;
+                 
+                 
+              
+              
+                if(c51_time.time_type==TIME0)
+                {
+                  
+              
+                   
+              //     c51_beep.inpt_time=20;
+              //     c51_beep.in_time_interrupt(100,0.5);
+                   c51_key.key=c51_key.whitch_key_down();
+                   c51_nixie_tube.arr[0]=c51_key.key/10;
+                   c51_nixie_tube.arr[1]=c51_key.key%10;
+                   if(time0_i%2==0)
+                   {
+                   c51_nixie_tube.show_number(1,c51_nixie_tube.arr[0]);
+                   }
+                   else
+                   {
+                   c51_nixie_tube.show_number(2,c51_nixie_tube.arr[1]);
+                   }
+              
+                  
+                
+                   time0_i++;
+              
+                   if(time0_i>20)
+                   {
+                     time0_i=0;
+                   }
+                  
+                }
+                else if(c51_time.time_type==TIME1)
+                {
+                 
+              
+                   if(time0_i%50==0)
+                   {
+                      //c51_led.led_on(2);
+                  }
+                  else
+                  {
+                     //c51_led.led_off(2);
+                  }
+                
+                  time1_i++;
+              
+              
+                
+                }
+                
+                
+                c51_time.time_type=0;
+                
+              }
+              #endif
+
+C51 COMPILER V9.54   MAIN                                                                  09/14/2022 18:43:14 PAGE 4   
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    272    ----
+   CONSTANT SIZE    =      6    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     37      10
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

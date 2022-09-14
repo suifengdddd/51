@@ -1,0 +1,13 @@
+".\Objects\STARTUP.obj",
+".\Objects\main.obj",
+".\Objects\Delay.obj",
+".\Objects\LED.obj",
+".\Objects\KEY.obj",
+".\Objects\BBBP.obj",
+".\Objects\NixieTube.obj",
+".\Objects\Time.obj",
+".\Objects\usart.obj",
+".\Objects\LedApp.obj" 
+TO ".\Objects\LED" 
+PRINT(".\Listings\LED.m51") RAMSIZE(256) 
+XDATA( 0X0000-0XFFFE )
