@@ -10,6 +10,12 @@
 >2022/9/8新建了分支develop-需要解决led闪烁函数延时问题
 
 >2022/9/13在master分支提交了动态数码管历程.
+
+>2022/9/14在master提交了实验1和实验2代码：
+
+[实验1](https://gitee.com/zou-jinqiang/51/tree/master/test1)
+
+[实验2](https://gitee.com/zou-jinqiang/51/tree/master/test2)
 ### 工程说明
 #### LED
 [LED任务要求](https://gitee.com/zou-jinqiang/51/blob/master/LED/51%E5%8D%95%E7%89%87%E6%9C%BA%E4%BB%BB%E5%8A%A11.pdf)
@@ -18,6 +24,15 @@
 
 #### LNitu
 [LNitu外设选择](https://gitee.com/zou-jinqiang/51/blob/master/LNitu/%E5%A4%96%E8%AE%BE%E9%80%89%E6%8B%A9.png)
+
+#### test1
+[实验一实验要求](https://gitee.com/zou-jinqiang/51/blob/master/%E5%AE%9E%E9%AA%8C1.png)
+
+#### test2
+[实验二实验要求](https://gitee.com/zou-jinqiang/51/blob/master/%E5%AE%9E%E9%AA%8C2.png)
+
+程序有不完美之处，数码管闪烁明显，可能是whitch_key_down函数的问题。
+
 
 #### 工程文件夹说明
 >CODE--存放各个模块的.c文件，定义有各模块使用函数
