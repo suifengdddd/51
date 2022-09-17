@@ -32,7 +32,7 @@
 程序有不完美之处，数码管闪烁明显，可能是whitch_key_down函数的问题。
 
 #### test6
-[实验六实验要求](https://gitee.com/zou-jinqiang/51/blob/master/%E5%AE%9E%E7%8E%B06.png）
+[实验六实验要求](https://gitee.com/zou-jinqiang/51/blob/master/%E5%AE%9E%E7%8E%B06.png)
 
 #### 工程文件夹说明
 >CODE--存放各个模块的.c文件，定义有各模块使用函数
