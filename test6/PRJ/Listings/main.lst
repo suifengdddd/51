@@ -1,0 +1,251 @@
+C51 COMPILER V9.54   MAIN                                                                  09/17/2022 19:57:58 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\ying_yong\keil5\C51\BIN\C51.EXE ..\SRC\main.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\INC) DEBUG OBJE
+                    -CTEXTEND PRINT(.\Listings\main.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include "STC51.h"
+   2          #if TIME_
+   3          create_time c51_time;
+   4          #endif
+   5          #if KEY_
+              create_key c51_key; 
+              #endif
+   8          #if LED_
+   9          create_led c51_led;
+  10          #endif
+  11          #if BEEP_
+              create_beep c51_beep;
+              #endif
+  14          #if SMG_
+  15          create_nixie_tube c51_nixie_tube;
+  16          
+  17          #endif
+  18          #if USART
+              create_usart c51_usart;
+              #endif
+  21          int arr[6]={7,6,5,4,3,2};//数码管显示数字数组
+  22          int hello_arr[6]={16,14,17,17,0};//数码管显示HELLO数组
+  23          int led_i=1;//led移位
+  24          int falg=0;//任务步骤标志位
+  25          int on_off=0;//led闪烁标志位
+  26          void led_control(void)
+  27          {
+  28   1          int i=1;
+  29   1        //led移动
+  30   1          if(falg==0)
+  31   1          {
+  32   2            c51_led.led_on(led_i);
+  33   2          }
+  34   1          //led闪烁
+  35   1          else if(falg==1)
+  36   1          {
+  37   2             
+  38   2            if(on_off==0)
+  39   2            {
+  40   3              for(i=1;i<=8;i++)
+  41   3              {
+  42   4                c51_led.led_on(i);
+  43   4              }
+  44   3            }
+  45   2            else
+  46   2            {
+  47   3              for(i=1;i<=8;i++)
+  48   3              {
+  49   4                c51_led.led_off(i);
+  50   4              }
+  51   3            }
+  52   2          }
+  53   1          else 
+  54   1          {
+C51 COMPILER V9.54   MAIN                                                                  09/17/2022 19:57:58 PAGE 2   
+
+  55   2             c51_led.led_all_off();
+  56   2          }
+  57   1      }
+  58          void sms_control(void)
+  59          {
+  60   1        
+  61   1          
+  62   1          //显示数字
+  63   1          if(falg!=2)
+  64   1          {
+  65   2            c51_nixie_tube.dynamic_display(1,6,arr);
+  66   2          }
+  67   1          //显示HELLO
+  68   1          else if(falg==2)
+  69   1          {
+  70   2            c51_nixie_tube.dynamic_display(1,5,hello_arr);
+  71   2          }
+  72   1      }
+  73          main()
+  74          {
+  75   1        
+  76   1          
+  77   1        
+  78   1          #if LED_
+  79   1          led_init(&c51_led);
+  80   1          #endif
+  81   1          #if KEY_
+                  key_init(&c51_key);
+                  #endif
+  84   1          #if BEEP_
+                  beep_init(&c51_beep);
+                  #endif
+  87   1          #if SMG_
+  88   1          nixie_tube_init(&c51_nixie_tube); 
+  89   1          #endif
+  90   1      #if TIME_ 
+  91   1          //打开定时器0   
+  92   1          c51_time.time0=TIME0OFF;
+  93   1           //10ms一个中断
+  94   1          c51_time.time0_ms=50;
+  95   1          //关闭定时器1
+  96   1          c51_time.time1=TIME1ON;
+  97   1          c51_time.time1_ms=50;
+  98   1        
+  99   1          c51_time.time_type=0;
+ 100   1          time_init(&c51_time);
+ 101   1      #endif
+ 102   1        
+ 103   1      #if USART
+                  //设置波特率为9600
+                  c51_usart.baud_rate=9600;
+                  usart_init(&c51_usart);
+              #endif    
+ 108   1          
+ 109   1      
+ 110   1          
+ 111   1        while(1)
+ 112   1        {
+ 113   2          
+ 114   2          led_control();
+ 115   2          sms_control();
+ 116   2        }
+C51 COMPILER V9.54   MAIN                                                                  09/17/2022 19:57:58 PAGE 3   
+
+ 117   1          
+ 118   1        
+ 119   1      }
+ 120          #if USART
+              void usart_rx_func_handle (void)
+              {
+                  unsigned  char  res;
+                  RI=0;
+                  c51_led.led_on(1);
+                  res =SBUF;
+                    if((c51_usart.USART_RX_STA&0x8000)==0)//接收未完成
+                  {
+                    if(c51_usart.USART_RX_STA&0x4000)//接收到了0x0d
+                    {
+                      if(res!=0x0a)c51_usart.USART_RX_STA=0;//接收错误,重新开始
+                      else c51_usart.USART_RX_STA|=0x8000;  //接收完成了 
+                    }else //还没收到0X0D
+                    { 
+                      if(res==0x0d)c51_usart.USART_RX_STA|=0x4000;
+                      else
+                      {
+                        c51_usart.USART_RX_BUF[c51_usart.USART_RX_STA&0X3FFF]=res;
+                        c51_usart.USART_RX_STA++;
+                        if(c51_usart.USART_RX_STA>(USART_REC_LEN-1))c51_usart.USART_RX_STA=0;//接收数据错误,重新开始接收    
+                      }    
+                    }
+                  }
+                       
+              }
+              #endif
+ 147          #if TIME_  
+ 148          void time_run_func_handle(void)
+ 149          {
+ 150   1         static int time_sms_i=0,sms_i=432,time_led_i=0,time_i=0,once=1,time_3s_i=0;
+ 151   1         
+ 152   1        if(c51_time.time_type==TIME0)
+ 153   1        {
+ 154   2          
+ 155   2        
+ 156   2        }
+ 157   1        else if(c51_time.time_type==TIME1)
+ 158   1        {
+ 159   2         
+ 160   2           //步骤1 控制数码管
+ 161   2           if(time_sms_i==2&&sms_i>398)
+ 162   2           {
+ 163   3               sms_i--;
+ 164   3               time_sms_i=0;
+ 165   3            
+ 166   3           }
+ 167   2           //控制led移动
+ 168   2            if(time_led_i==5&&sms_i>398)
+ 169   2           {
+ 170   3               led_i++;
+ 171   3               time_led_i=0;
+ 172   3               if(led_i>8)
+ 173   3               {
+ 174   4                 led_i=0;
+ 175   4               }
+ 176   3               c51_led.led_all_off();
+ 177   3               
+ 178   3           }
+C51 COMPILER V9.54   MAIN                                                                  09/17/2022 19:57:58 PAGE 4   
+
+ 179   2          
+ 180   2           //步骤2
+ 181   2           if(sms_i==398&&once==1)
+ 182   2           {
+ 183   3              falg=1;  
+ 184   3              time_i=0;
+ 185   3              once=0;
+ 186   3              time_3s_i=0;
+ 187   3              
+ 188   3           }
+ 189   2           
+ 190   2            //控制led闪烁
+ 191   2            if(time_i==10&&time_3s_i<=60)
+ 192   2           {
+ 193   3             time_i=0;
+ 194   3             on_off=~on_off; 
+ 195   3           }
+ 196   2           //步骤3显示Hell0
+ 197   2           if(time_3s_i==60)
+ 198   2           {
+ 199   3              falg=2;
+ 200   3           }
+ 201   2           
+ 202   2           arr[3]=sms_i/100%10;
+ 203   2           arr[4]=sms_i/10%10;
+ 204   2           arr[5]=sms_i/1%10;
+ 205   2           time_sms_i++;
+ 206   2           time_led_i++;
+ 207   2           time_i++;
+ 208   2           if(falg==1)
+ 209   2           {
+ 210   3             time_3s_i++;
+ 211   3           }
+ 212   2      
+ 213   2        
+ 214   2        
+ 215   2        }
+ 216   1        
+ 217   1        
+ 218   1        c51_time.time_type=0;
+ 219   1        
+ 220   1      }
+ 221          #endif
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    533    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     91       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
