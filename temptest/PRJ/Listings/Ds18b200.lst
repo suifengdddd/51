@@ -1,0 +1,158 @@
+C51 COMPILER V9.54   DS18B200                                                              09/18/2022 21:48:25 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE DS18B200
+OBJECT MODULE PLACED IN .\Objects\Ds18b200.obj
+COMPILER INVOKED BY: D:\ying_yong\keil5\C51\BIN\C51.EXE ..\CODE\Ds18b200.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\INC) DEBUG
+                    - OBJECTEXTEND PRINT(.\Listings\Ds18b200.lst) TABS(2) OBJECT(.\Objects\Ds18b200.obj)
+
+line level    source
+
+   1          #include "Ds18b20.h"
+   2          #if DS18B20_
+   3          static void ds18b20_init(void);
+   4          static bit read_temp_bit(void);
+   5          static uint8 read_temp_byte(void);
+   6          static void write_temp_byte(uint8 dat);
+   7          static void begin_temp_change(void);
+   8          static void get_temp(struct my_ds18b20 *temp_object);
+   9          static void ds18b20_init(void)
+  10          {
+  11   1        uint8 i=0;
+  12   1        DS_GPIO=0;
+  13   1        i=103;
+  14   1        while(i>0)
+  15   1        {
+  16   2          i--;
+  17   2        }
+  18   1        DS_GPIO=1;
+  19   1        i=4;
+  20   1        while(i>0)
+  21   1        {
+  22   2          i--;
+  23   2        }
+  24   1      }
+  25          static bit read_temp_bit(void)
+  26          {
+  27   1         uint8 i=0;
+  28   1         bit dat;
+  29   1         DS_GPIO=0;
+  30   1         i++;
+  31   1         DS_GPIO=1;
+  32   1         i++;
+  33   1         i++;
+  34   1         dat=DS_GPIO;
+  35   1         i=8;
+  36   1        while(i>0)
+  37   1        {
+  38   2          i--;
+  39   2        }
+  40   1        return dat;
+  41   1         
+  42   1        
+  43   1        
+  44   1      }
+  45          
+  46          static uint8 read_temp_byte(void)
+  47          {
+  48   1         uint8 i,j,dat;
+  49   1         dat=0;
+  50   1        for(i=1;i<=8;i++)
+  51   1        {
+  52   2          j=read_temp_bit();
+  53   2          dat=(j<<7)|(dat>>1);
+  54   2        }
+C51 COMPILER V9.54   DS18B200                                                              09/18/2022 21:48:25 PAGE 2   
+
+  55   1        return dat;
+  56   1      }
+  57          static void write_temp_byte(uint8 dat)
+  58          {
+  59   1         uint16 i;
+  60   1         uint8 j;
+  61   1        bit testb;
+  62   1        for(j=1;j<=8;j++)
+  63   1        {
+  64   2           testb=dat &0x01;
+  65   2           dat=dat>>1;
+  66   2          if(testb)
+  67   2          {
+  68   3            DS_GPIO=0;
+  69   3            i++;
+  70   3            DS_GPIO=1;
+  71   3            i=8;
+  72   3            while(i>0)
+  73   3            {
+  74   4              i--;
+  75   4            }
+  76   3          }
+  77   2          else
+  78   2          {
+  79   3            DS_GPIO=0;
+  80   3            i=8;
+  81   3            while(i>0)
+  82   3            {
+  83   4              i--;
+  84   4            }
+  85   3            DS_GPIO=1;
+  86   3            i++;
+  87   3            i++;
+  88   3            
+  89   3          }
+  90   2        }
+  91   1      }
+  92          static void begin_temp_change(void)
+  93          {
+  94   1        
+  95   1          ds18b20_init();
+  96   1          delayms(1);
+  97   1          write_temp_byte(0xcc);
+  98   1          write_temp_byte(0x44);
+  99   1          
+ 100   1      }
+ 101          static void get_temp(struct my_ds18b20 *temp_object)
+ 102          {
+ 103   1        uint8 data_L=0,data_H=0;
+ 104   1        uint8 i=0;
+ 105   1        float f_temp=0;
+ 106   1        ds18b20_init();
+ 107   1        delayms(1);
+ 108   1        write_temp_byte(0xcc);
+ 109   1        write_temp_byte(0xbe);
+ 110   1        data_L=read_temp_byte();
+ 111   1        data_H=read_temp_byte();
+ 112   1        temp_object->temp=data_H;
+ 113   1        temp_object->temp=temp_object->temp<<8;
+ 114   1        temp_object->temp=temp_object->temp|data_L;
+ 115   1        f_temp= temp_object->temp*0.0625;
+ 116   1        temp_object->temp=f_temp*10+0.5;
+C51 COMPILER V9.54   DS18B200                                                              09/18/2022 21:48:25 PAGE 3   
+
+ 117   1        
+ 118   1        
+ 119   1      }
+ 120          void temp_init(create_temp *temp_object)
+ 121          {
+ 122   1        temp_object->temp=0;
+ 123   1        temp_object->temp_max=280;
+ 124   1        temp_object->temp_mix=260;
+ 125   1        temp_object->begin_temp_change=begin_temp_change;
+ 126   1        temp_object->get_temp=get_temp;
+ 127   1        
+ 128   1        
+ 129   1      }
+ 130          #endif
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    412    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      12
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----       2
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
