@@ -87,6 +87,11 @@ static int whitch_key_down (void)
 			}
 			
 		}
+		while((a<100)&&(GPIO_KEY!=0xf0))	 //¼ì²â°´¼üËÉÊÖ¼ì²â
+	{
+		delayms(1);
+		a++;
+	}
 	}
 #else	
 		GPIO_KEY=0x0f;
@@ -115,13 +120,14 @@ static int whitch_key_down (void)
 			}
 			
 		}
-	}
-#endif
-	while((a<100)&&(GPIO_KEY!=0xf0))	 //¼ì²â°´¼üËÉÊÖ¼ì²â
+		while((a<100)&&(GPIO_KEY!=0xf0))	 //¼ì²â°´¼üËÉÊÖ¼ì²â
 	{
 		delayms(1);
 		a++;
 	}
+	}
+#endif
+	
 	return KeyValue;
 }
 

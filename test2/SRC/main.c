@@ -77,9 +77,18 @@ main()
 			
 			c51_led.led_on(i);
 			c51_led.led_off(i-1);
-			arr[0]=(key_val-5)*(key_val-5)/100%10;
-			arr[1]=(key_val-5)*(key_val-5)/10%10;
-			arr[2]=(key_val-5)*(key_val-5)/1%10;
+			if(key_val==0)
+			{
+			   arr[0]=0;
+			  arr[1]=0;
+			  arr[2]=0;
+			}
+			else
+			{
+				arr[0]=(key_val-5)*(key_val-5)/100%10;
+			  arr[1]=(key_val-5)*(key_val-5)/10%10;
+			  arr[2]=(key_val-5)*(key_val-5)/1%10;
+			}
 			c51_nixie_tube.dynamic_display(1,3,arr);
 
 	}

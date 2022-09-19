@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   KEY                                                                   09/14/2022 18:43:14 PAGE 1   
+C51 COMPILER V9.54   KEY                                                                   09/19/2022 13:53:54 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE KEY
@@ -62,7 +62,7 @@ line level    source
   52   3           }
   53   2        }
   54   1        if(GPIO_KEY5==0)
-C51 COMPILER V9.54   KEY                                                                   09/14/2022 18:43:14 PAGE 2   
+C51 COMPILER V9.54   KEY                                                                   09/19/2022 13:53:54 PAGE 2   
 
   55   1        {
   56   2           delayms(10);
@@ -99,8 +99,13 @@ line level    source
   87   4            }
   88   3            
   89   3          }
-  90   2        }
-  91   1      #else 
+  90   2          while((a<100)&&(GPIO_KEY!=0xf0))   //¼ì²â°´¼üËÉÊÖ¼ì²â
+  91   2        {
+  92   3          delayms(1);
+  93   3          a++;
+  94   3        }
+  95   2        }
+  96   1      #else 
                   GPIO_KEY=0x0f;
                 if(GPIO_KEY!=0x0f)//¶ÁÈ¡°´¼üÊÇ·ñ°´ÏÂ
                 {
@@ -121,29 +126,30 @@ line level    source
                     switch(GPIO_KEY)
                     {
                       case(0X70): KeyValue=KeyValue;break;
+C51 COMPILER V9.54   KEY                                                                   09/19/2022 13:53:54 PAGE 3   
+
                       case(0Xb0): KeyValue=KeyValue+4;break;
                       case(0Xd0): KeyValue=KeyValue+8;break;
                       case(0Xe0): KeyValue=KeyValue+12;break;
                     }
                     
-C51 COMPILER V9.54   KEY                                                                   09/14/2022 18:43:14 PAGE 3   
-
                   }
+                  while((a<100)&&(GPIO_KEY!=0xf0))   //¼ì²â°´¼üËÉÊÖ¼ì²â
+                {
+                  delayms(1);
+                  a++;
+                }
                 }
               #endif
- 120   1        while((a<100)&&(GPIO_KEY!=0xf0))   //¼ì²â°´¼üËÉÊÖ¼ì²â
- 121   1        {
- 122   2          delayms(1);
- 123   2          a++;
- 124   2        }
- 125   1        return KeyValue;
- 126   1      }
- 127          
- 128          #endif
+ 130   1        
+ 131   1        return KeyValue;
+ 132   1      }
+ 133          
+ 134          #endif
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    304    ----
+   CODE SIZE        =    307    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
