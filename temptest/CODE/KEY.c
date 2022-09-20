@@ -1,6 +1,6 @@
 #include "KEY.h"
 #if KEY_
-static int whitch_key_down (struct my_key *key_object);
+static int whitch_key_down (void);
 /**
   * @brief          初始化key对象
   * @param[in]      key_object：key对象指针
@@ -17,10 +17,10 @@ void key_init(create_key *key_object)
   * @retval         按键标号(2-21)
   */
 
-static int whitch_key_down (struct my_key *key_object)
+static int whitch_key_down (void)
 {
-	int  KeyValue=0,a=0;
-
+	int  KeyValue=0;
+  int a=0;
   GPIO_KEY=0xFF;
 	
 	if(GPIO_KEY2==0)
@@ -28,8 +28,8 @@ static int whitch_key_down (struct my_key *key_object)
 		 delayms(10);
 		 if(GPIO_KEY2==0)
 		 {
-			  while(!GPIO_KEY2);
-			  KeyValue=KEY2;
+			 while(!GPIO_KEY2);
+			  return KEY2;
 		 }
 	}
 	if(GPIO_KEY3==0)
@@ -37,8 +37,9 @@ static int whitch_key_down (struct my_key *key_object)
 		 delayms(10);
 		 if(GPIO_KEY3==0)
 		 {
+			 
 			  while(!GPIO_KEY3);
-			  KeyValue=KEY3;
+			  return KEY3;
 		 }
 	}
 	if(GPIO_KEY4==0)
@@ -46,8 +47,8 @@ static int whitch_key_down (struct my_key *key_object)
 		 delayms(10);
 		 if(GPIO_KEY4==0)
 		 {
-			  while(!GPIO_KEY4);
-			  KeyValue=KEY4;
+			 while(!GPIO_KEY4);
+			  return KEY4;
 		 }
 	}
 	if(GPIO_KEY5==0)
@@ -55,8 +56,8 @@ static int whitch_key_down (struct my_key *key_object)
 		 delayms(10);
 		 if(GPIO_KEY5==0)
 		 {
-			 while(!GPIO_KEY5);
-			  KeyValue=KEY5;
+			while(!GPIO_KEY5);
+			  return KEY5;
 		 }
 	}
 #if _C51==1
@@ -86,6 +87,11 @@ static int whitch_key_down (struct my_key *key_object)
 			}
 			
 		}
+		while((a<100)&&(GPIO_KEY!=0xf0))	 //检测按键松手检测
+	{
+		delayms(1);
+		a++;
+	}
 	}
 #else	
 		GPIO_KEY=0x0f;
@@ -114,14 +120,13 @@ static int whitch_key_down (struct my_key *key_object)
 			}
 			
 		}
+		while((a<100)&&(GPIO_KEY!=0xf0))	 //检测按键松手检测
+	{
+		delayms(1);
+		a++;
+	}
 	}
 #endif
-	
-	if(KeyValue!=0)
-	{
-		key_object->key=KeyValue;
-	}
-	
 	
 	return KeyValue;
 }

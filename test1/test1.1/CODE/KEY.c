@@ -20,7 +20,7 @@ void key_init(create_key *key_object)
 static int whitch_key_down (void)
 {
 	int  KeyValue=0;
-
+  int a=0;
   GPIO_KEY=0xFF;
 	
 	if(GPIO_KEY2==0)
@@ -28,7 +28,7 @@ static int whitch_key_down (void)
 		 delayms(10);
 		 if(GPIO_KEY2==0)
 		 {
-			 
+			 while(!GPIO_KEY2);
 			  return KEY2;
 		 }
 	}
@@ -38,6 +38,7 @@ static int whitch_key_down (void)
 		 if(GPIO_KEY3==0)
 		 {
 			 
+			  while(!GPIO_KEY3);
 			  return KEY3;
 		 }
 	}
@@ -46,7 +47,7 @@ static int whitch_key_down (void)
 		 delayms(10);
 		 if(GPIO_KEY4==0)
 		 {
-			 
+			 while(!GPIO_KEY4);
 			  return KEY4;
 		 }
 	}
@@ -55,7 +56,7 @@ static int whitch_key_down (void)
 		 delayms(10);
 		 if(GPIO_KEY5==0)
 		 {
-			
+			while(!GPIO_KEY5);
 			  return KEY5;
 		 }
 	}
@@ -86,6 +87,11 @@ static int whitch_key_down (void)
 			}
 			
 		}
+		while((a<100)&&(GPIO_KEY!=0xf0))	 //¼ì²â°´¼üËÉÊÖ¼ì²â
+	{
+		delayms(1);
+		a++;
+	}
 	}
 #else	
 		GPIO_KEY=0x0f;
@@ -114,6 +120,11 @@ static int whitch_key_down (void)
 			}
 			
 		}
+		while((a<100)&&(GPIO_KEY!=0xf0))	 //¼ì²â°´¼üËÉÊÖ¼ì²â
+	{
+		delayms(1);
+		a++;
+	}
 	}
 #endif
 	
