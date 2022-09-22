@@ -7,6 +7,8 @@
 ".\Objects\NixieTube.obj",
 ".\Objects\Time.obj",
 ".\Objects\usart.obj",
+".\Objects\Lcd1602.obj",
+".\Objects\Ds18b200.obj",
 ".\Objects\LedApp.obj" 
 TO ".\Objects\LED" 
 PRINT(".\Listings\LED.m51") RAMSIZE(256) 

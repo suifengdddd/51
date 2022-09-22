@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   KEY                                                                   09/14/2022 17:08:00 PAGE 1   
+C51 COMPILER V9.54   KEY                                                                   09/22/2022 08:26:42 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE KEY
@@ -30,7 +30,7 @@ line level    source
               static int whitch_key_down (void)
               {
                 int  KeyValue=0;
-              
+                int a=0;
                 GPIO_KEY=0xFF;
                 
                 if(GPIO_KEY2==0)
@@ -38,7 +38,7 @@ line level    source
                    delayms(10);
                    if(GPIO_KEY2==0)
                    {
-                     
+                     while(!GPIO_KEY2);
                       return KEY2;
                    }
                 }
@@ -48,6 +48,7 @@ line level    source
                    if(GPIO_KEY3==0)
                    {
                      
+                      while(!GPIO_KEY3);
                       return KEY3;
                    }
                 }
@@ -56,18 +57,18 @@ line level    source
                    delayms(10);
                    if(GPIO_KEY4==0)
                    {
-                     
+                     while(!GPIO_KEY4);
                       return KEY4;
                    }
                 }
                 if(GPIO_KEY5==0)
-                {
-C51 COMPILER V9.54   KEY                                                                   09/14/2022 17:08:00 PAGE 2   
+C51 COMPILER V9.54   KEY                                                                   09/22/2022 08:26:42 PAGE 2   
 
+                {
                    delayms(10);
                    if(GPIO_KEY5==0)
                    {
-                    
+                    while(!GPIO_KEY5);
                       return KEY5;
                    }
                 }
@@ -98,6 +99,11 @@ line level    source
                     }
                     
                   }
+                  while((a<100)&&(GPIO_KEY!=0xf0))   //¼ì²â°´¼üËÉÊÖ¼ì²â
+                {
+                  delayms(1);
+                  a++;
+                }
                 }
               #else 
                   GPIO_KEY=0x0f;
@@ -120,14 +126,19 @@ line level    source
                     switch(GPIO_KEY)
                     {
                       case(0X70): KeyValue=KeyValue;break;
+C51 COMPILER V9.54   KEY                                                                   09/22/2022 08:26:42 PAGE 3   
+
                       case(0Xb0): KeyValue=KeyValue+4;break;
                       case(0Xd0): KeyValue=KeyValue+8;break;
                       case(0Xe0): KeyValue=KeyValue+12;break;
                     }
                     
                   }
-C51 COMPILER V9.54   KEY                                                                   09/14/2022 17:08:00 PAGE 3   
-
+                  while((a<100)&&(GPIO_KEY!=0xf0))   //¼ì²â°´¼üËÉÊÖ¼ì²â
+                {
+                  delayms(1);
+                  a++;
+                }
                 }
               #endif
                 

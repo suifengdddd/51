@@ -59,14 +59,15 @@ main()
  
 	while(1)
 	{
-	
+	  //不管是什么进制最终都会转换成二进制处理，
+		//单片机led为0点亮这边进行取反。
 		P1=~i;
 		i++;
-    delayms(1000);
+    delayms(1000);//每隔1s加1
 		if(i>256)
 		{
 			i=0;
-			c51_led.led_all_off();
+			c51_led.led_all_off();//大于256重新开始
 		}
 
 

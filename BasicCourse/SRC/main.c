@@ -19,11 +19,14 @@ create_nixie_tube c51_nixie_tube;
 create_usart c51_usart;
 #endif
 
+#if LCD1602_
+create_lcd c51_lcd1602;
+#endif
+
 main()
 {
-	
-    int i=1;
     
+	  
 	  #if LED_
 	  int arr[8]={LED1,OFF,LED3,OFF,0,0,0,0};
 	  led_init(&c51_led);
@@ -39,7 +42,7 @@ main()
 	  #endif
 #if TIME_	
     //打开定时器0		
-	  c51_time.time0=TIME0ON;
+	  c51_time.time0=TIME0OFF;
 		 //10ms一个中断
 	  c51_time.time0_ms=50;
 	  //关闭定时器1
@@ -55,17 +58,27 @@ main()
 	  c51_usart.baud_rate=9600;
 	  usart_init(&c51_usart);
 #endif		
+
+#if LCD1602_
+lcd1602_init(&c51_lcd1602);
+#endif
 		
 
-    
-	while(1)
-	{
+
+   
+		c51_lcd1602.show_data("I LOVE CHINA!",0x80);
+		c51_lcd1602.show_data("WWW.TXMCU.COM",0x80+0x40);
+		delayms(2000);
+		c51_lcd1602.write_com(0x01);
+		c51_lcd1602.show_data("Hello  everyone!",0x80);
+		c51_lcd1602.show_data("Welcome to here!",0x80+0x40);
+		
+		while(1)
+		{
+		
+		}
+
 	
-
-		c51_led.led_flicker(c51_key.key/8,100,1000);
-		c51_led.led_flicker(c51_key.key%8,100,1000);
-
-	}
 		
 	
 }
@@ -110,19 +123,6 @@ void time_run_func_handle(void)
 		
 
      
-//		 c51_beep.inpt_time=20;
-//		 c51_beep.in_time_interrupt(100,0.5);
-	   c51_key.key=c51_key.whitch_key_down();
-		 c51_nixie_tube.arr[0]=c51_key.key/10;
-		 c51_nixie_tube.arr[1]=c51_key.key%10;
-		 if(time0_i%2==0)
-		 {
-		 c51_nixie_tube.show_number(1,c51_nixie_tube.arr[0]);
-		 }
-		 else
-		 {
-		 c51_nixie_tube.show_number(2,c51_nixie_tube.arr[1]);
-		 }
 
 		
 	
