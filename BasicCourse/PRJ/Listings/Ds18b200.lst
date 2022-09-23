@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   DS18B200                                                              09/22/2022 17:50:31 PAGE 1   
+C51 COMPILER V9.54   DS18B200                                                              09/23/2022 20:16:01 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE DS18B200
@@ -62,7 +62,7 @@ line level    source
                   j=read_temp_bit();
                   dat=(j<<7)|(dat>>1);
                 }
-C51 COMPILER V9.54   DS18B200                                                              09/22/2022 17:50:31 PAGE 2   
+C51 COMPILER V9.54   DS18B200                                                              09/23/2022 20:16:01 PAGE 2   
 
                 return dat;
               }
@@ -126,7 +126,7 @@ line level    source
                 temp_object->temp=temp_object->temp|data_L;
                 f_temp= temp_object->temp*0.0625;
                 temp_object->temp=f_temp*10+0.5;
-C51 COMPILER V9.54   DS18B200                                                              09/22/2022 17:50:31 PAGE 3   
+C51 COMPILER V9.54   DS18B200                                                              09/23/2022 20:16:01 PAGE 3   
 
                 
                 
