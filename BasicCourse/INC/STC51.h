@@ -12,7 +12,7 @@
 #define TIME_   0//26
 #define USART   0   //52
 #define BEEP_   0   //18
-#define KEY_    0   //6
+#define KEY_    0  //6
 #define SMG_    1   //19
 #define LED_     0  //22
 #define DS18B20_ 0
