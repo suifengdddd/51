@@ -33,4 +33,5 @@ typedef unsigned char uint8;
 #include "Time.h"
 #include "usart.h"
 #include "Lcd1602.h"
+#include "Ds18b20.h"
 #endif

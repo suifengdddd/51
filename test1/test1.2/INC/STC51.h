@@ -2,7 +2,7 @@
 #define STC51_H
 //1为天翔单片机
 //0普中单片机
-#define STC51   1
+#define STC51   0
 #if STC51
 #define _C51    1
 #else

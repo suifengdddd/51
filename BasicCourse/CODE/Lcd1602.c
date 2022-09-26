@@ -55,7 +55,6 @@ static void show_data(uint8 *lcd_data,uint8 location)reentrant
 	  int count=0;
 	  int i=0;
 	  uint8 * temp=lcd_data;
-
 	   while(*temp)
 		 {
 			 count++;

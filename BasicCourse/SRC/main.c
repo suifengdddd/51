@@ -23,6 +23,9 @@ create_usart c51_usart;
 create_lcd c51_lcd1602;
 #endif
 
+#if DS18B20_
+create_temp c51_ds18b20;
+#endif
 main()
 {
     
@@ -62,7 +65,10 @@ main()
 #if LCD1602_
 lcd1602_init(&c51_lcd1602);
 #endif
-		
+
+#if DS18B20_
+temp_init(&c51_ds18b20);
+#endif
 
 
    
@@ -75,7 +81,7 @@ lcd1602_init(&c51_lcd1602);
 		
 		while(1)
 		{
-		
+		  
 		}
 
 	
