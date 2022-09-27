@@ -1,1 +1,0 @@
-"..\SRC\main.c" COMPACT OPTIMIZE (8,SPEED) BROWSE INCDIR(..\INC) DEBUG OBJECTEXTEND PRINT(.\Listings\main.lst) TABS (2) OBJECT(.\Objects\main.obj)
