@@ -11,15 +11,15 @@
 #define _C51    2
 #endif
 //对应为1 打开相应外设（串口不能用）
-#define TIME_      OPEN//26
+#define TIME_      CLOSE//26
 #define USART      CLOSE //52
 #define BEEP_      CLOSE //18
-#define KEY_       CLOSE  //6
+#define KEY_       OPEN  //6
 #define SMG_       OPEN   //19
 #define LED_       CLOSE  //22
 #define DS18B20_   CLOSE
-#define LCD1602_   CLOSE
-#define ADC_       OPEN
+#define LCD1602_   OPEN
+
 typedef unsigned int uint16;
 typedef unsigned char uint8;
 #include <reg52.h>
@@ -34,5 +34,4 @@ typedef unsigned char uint8;
 #include "usart.h"
 #include "Lcd1602.h"
 #include "Ds18b20.h"
-#include "adc.h"
 #endif

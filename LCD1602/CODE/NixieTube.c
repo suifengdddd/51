@@ -6,7 +6,7 @@ unsigned char code table[]={0x3f,0x06,0x5b,0x4f,
 	                     0x66,0x6d,0x7d,0x07,
                        0x7f,0x6f,0x77,0x7c,
                        0x39,0x5e,0x79,0x71};
-unsigned char code location_arr[]={0xff,0x7e,0x7d,0x7b,0x77,0x6f,0x5f};
+unsigned char code location_arr[]={0xff,0xfe,0xfd,0xfb,0xf7,0xef,0xdf};
 /**
   * @brief          初始化数码管对象
   * @param[in]      object：数码管对象指针
@@ -35,9 +35,8 @@ static void show_number (int location,int number)
 	    U1=1;
 	    P0=table[number];
 	    U1=0;
-	
-	    U2=0;
 	    P0=location_arr[0];
+	
 	    U2=1;
 	    P0=location_arr[location];
 	    U2=0;

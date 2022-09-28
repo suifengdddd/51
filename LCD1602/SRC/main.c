@@ -26,11 +26,6 @@ create_lcd c51_lcd1602;
 #if DS18B20_
 create_temp c51_ds18b20;
 #endif
-
-#if ADC_
-create_adc c51_adc;
-#endif
-
 main()
 {
     
@@ -75,20 +70,18 @@ lcd1602_init(&c51_lcd1602);
 temp_init(&c51_ds18b20);
 #endif
 
-#if ADC_
-adc_init(&c51_adc);
-#endif
+
    
-	
+		c51_lcd1602.show_data("I LOVE CHINA!",0x80);
+		c51_lcd1602.show_data("WWW.TXMCU.COM",0x80+0x40);
+		delayms(2000);
+		c51_lcd1602.write_com(0x01);
+		c51_lcd1602.show_data("Hello  everyone!",0x80);
+		c51_lcd1602.show_data("Welcome to here!",0x80+0x40);
 		
 		while(1)
 		{
-		  c51_adc.adc_val=c51_adc.read_adc_value();
-			c51_nixie_tube.arr[0]=c51_adc.adc_val/100;
-			c51_nixie_tube.arr[1]=c51_adc.adc_val%100/10;
-			c51_nixie_tube.arr[2]=c51_adc.adc_val%10;
-			c51_nixie_tube.dynamic_display(1,3,c51_nixie_tube.arr);
-			
+		  
 		}
 
 	
@@ -138,9 +131,9 @@ void time_run_func_handle(void)
      
 
 		
-	 
+	
 	   time0_i++;
-  
+
 		 if(time0_i>20)
 		 {
 			 time0_i=0;
