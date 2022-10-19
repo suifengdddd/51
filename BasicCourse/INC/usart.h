@@ -3,7 +3,7 @@
 #include "STC51.h"
 //串口还不能使用
 #if USART
-#define USART_REC_LEN  			15	//定义最大接收字节数 200
+#define USART_REC_LEN  			15	//定义最大接收字节数 15
 typedef struct my_usart
 { 
 	 //定时器发送函数

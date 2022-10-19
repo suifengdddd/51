@@ -1,6 +1,7 @@
 #include "STC51.h"
 #if TIME_
 create_time c51_time;
+create_Timer *my_time;
 #endif
 #if KEY_
 create_key c51_key; 
@@ -30,13 +31,12 @@ create_temp c51_ds18b20;
 #if ADC_
 create_adc c51_adc;
 #endif
-
+int i_led=0;
 main()
 {
     
-	  
+	
 	  #if LED_
-	  int arr[8]={LED1,OFF,LED3,OFF,0,0,0,0};
 	  led_init(&c51_led);
 	  #endif
 	  #if KEY_
@@ -49,16 +49,18 @@ main()
     nixie_tube_init(&c51_nixie_tube);	
 	  #endif
 #if TIME_	
+		
     //打开定时器0		
-	  c51_time.time0=TIME0OFF;
+	  c51_time.time0=TIME0ON;
 		 //10ms一个中断
 	  c51_time.time0_ms=50;
 	  //关闭定时器1
-	  c51_time.time1=TIME1OFF;
+	  c51_time.time1=TIME1ON;
 	  c51_time.time1_ms=50;
 	
 	  c51_time.time_type=0;
 	  time_init(&c51_time);
+		//my_time=create_timer(500,&c51_time);
 #endif
 	
 #if USART
@@ -83,12 +85,24 @@ adc_init(&c51_adc);
 		
 		while(1)
 		{
-		  c51_adc.adc_val=c51_adc.read_adc_value();
-			c51_nixie_tube.arr[0]=c51_adc.adc_val/100;
-			c51_nixie_tube.arr[1]=c51_adc.adc_val%100/10;
-			c51_nixie_tube.arr[2]=c51_adc.adc_val%10;
-			c51_nixie_tube.dynamic_display(1,3,c51_nixie_tube.arr);
-			
+			 c51_nixie_tube.arr[0]=200/1000%10;
+			 c51_nixie_tube.arr[1]=200/100%10;
+			 c51_nixie_tube.arr[2]=200/10%10;
+			 c51_nixie_tube.arr[3]=200/1%10;
+//			if(my_time->time_out(my_time))
+//			{
+//				 i_led=~i_led;
+//			}
+			if(i_led==1)
+			{
+				c51_led.led_on(1);
+			}
+			else
+			{
+				 c51_led.led_off(1);
+			}
+			c51_nixie_tube.dynamic_display(1,4,c51_nixie_tube.arr);
+      		
 		}
 
 	
@@ -98,35 +112,19 @@ adc_init(&c51_adc);
 #if USART
 void usart_rx_func_handle (void)
 {
-	  unsigned  char  res;
-	  RI=0;
-	  c51_led.led_on(1);
-	  res =SBUF;
-	  	if((c51_usart.USART_RX_STA&0x8000)==0)//接收未完成
-		{
-			if(c51_usart.USART_RX_STA&0x4000)//接收到了0x0d
-			{
-				if(res!=0x0a)c51_usart.USART_RX_STA=0;//接收错误,重新开始
-				else c51_usart.USART_RX_STA|=0x8000;	//接收完成了 
-			}else //还没收到0X0D
-			{	
-				if(res==0x0d)c51_usart.USART_RX_STA|=0x4000;
-				else
-				{
-					c51_usart.USART_RX_BUF[c51_usart.USART_RX_STA&0X3FFF]=res;
-					c51_usart.USART_RX_STA++;
-					if(c51_usart.USART_RX_STA>(USART_REC_LEN-1))c51_usart.USART_RX_STA=0;//接收数据错误,重新开始接收	  
-				}		 
-			}
-		}
-	  		 
+	 c51_usart.USART_RX_BUF[USART_RX_STA]=SBUF;
+	 if(c51_usart.USART_RX_STA<USART_REC_LEN)
+	 {
+			c51_usart.USART_RX_STA++;
+	 }		 
 }
 #endif
 #if TIME_	 
-void time_run_func_handle(void)
+void time_run_func_handle(void)reentrant
 {
 	 static int time0_i=0;
 	 static int time1_i=0;
+	 uint8 i=0;
 	 
 	 
 
@@ -138,7 +136,18 @@ void time_run_func_handle(void)
      
 
 		
-	 
+	   if(time0_i==20)
+		 {
+			  time1_i=!time1_i;
+		 }
+		 	if(time1_i==1)
+			{
+				c51_led.led_on(2);
+			}
+			else
+			{
+				 c51_led.led_off(2);
+			}
 	   time0_i++;
   
 		 if(time0_i>20)
@@ -150,19 +159,23 @@ void time_run_func_handle(void)
 	else if(c51_time.time_type==TIME1)
 	{
    
-
-		 if(time0_i%50==0)
-		 {
-		    //c51_led.led_on(2);
-		}
-		else
-		{
-			 //c51_led.led_off(2);
-		}
 	
-	  time1_i++;
-
-
+//	 
+//		for(i=0;i<TIMER_NUMBER;i++)
+//		{
+//			 if(timer_arr[i]!=NULL)
+//			 {
+//				 if(timer_arr[i]->time_i==timer_arr[i]->time_ms_i)
+//				 {
+//					  timer_arr[i]->flag=1;
+//					  timer_arr[i]->time_i=0;
+//				 }
+//				 timer_arr[i]->time_i++;
+//				
+//				 
+//			 }
+//		}
+   
 	
 	}
 	

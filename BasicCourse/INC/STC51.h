@@ -16,10 +16,10 @@
 #define BEEP_      CLOSE //18
 #define KEY_       CLOSE  //6
 #define SMG_       OPEN   //19
-#define LED_       CLOSE  //22
+#define LED_       OPEN  //22
 #define DS18B20_   CLOSE
 #define LCD1602_   CLOSE
-#define ADC_       OPEN
+#define ADC_       CLOSE
 typedef unsigned int uint16;
 typedef unsigned char uint8;
 #include <reg52.h>

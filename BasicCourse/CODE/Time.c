@@ -8,6 +8,9 @@
  */
 #if TIME_
 static void time_again_init(create_time * time_object);
+//static uint8 time_out(struct Timer*object);
+//create_Timer * timer_arr[TIMER_NUMBER]={0}; 
+//uint8 time_point_number=0;
 /**
   * @brief          初始化time对象
   * @param[in]      time_object：time对象指针
@@ -15,9 +18,14 @@ static void time_again_init(create_time * time_object);
   */
 void time_init(create_time *time_object)
 {
+	 uint8 i=0;
 	 time_object->time_run_func_handle=time_run_func_handle;
 	 time_object->time_again_init=time_again_init;
-	
+	 time_object->time1_i=0;
+//	 for(i=0;i<TIMER_NUMBER;i++)
+//	{
+//		timer_arr[i]=NULL;
+//	}
 	
 	 if(time_object->time0==TIME0ON&&time_object->time1==TIME1OFF)
 	 {
@@ -63,6 +71,40 @@ void time_init(create_time *time_object)
 	
 }
 /**
+  * @brief          初始化定时器定时对象
+  * @param[in]      time_object：定时器定时对象指针
+  * @retval         NULL
+  */
+//create_Timer * create_timer(uint8 time_ms,create_time *time)
+//{
+//	 if (time_point_number>TIMER_NUMBER)
+//	 {
+//		 return NULL;
+//	 }
+//	 //继承c51定时器
+//	 timer_arr[time_point_number]->time=time;
+//	 //定时几个定时器周期
+//	 timer_arr[time_point_number]->time_ms_i=time_ms/time->time1_ms;
+//	 timer_arr[time_point_number]->time_i=0;
+//	 timer_arr[time_point_number]->flag=0;
+//	 timer_arr[time_point_number]->time_out=time_out;
+//	 time_point_number++;
+//	 return timer_arr[time_point_number];
+//	 
+//}
+//static uint8 time_out(struct Timer*object)
+//{
+//	  if(object->flag==1)
+//		{
+//			 object->flag=0;
+//			 return 1;
+//		}
+//		else
+//		{
+//			return 0;
+//		}
+//}
+/**
   * @brief          重新填充THX和TLX
   * @param[in]      time_object：time对象指针
   * @retval         NULL
@@ -89,6 +131,7 @@ static void time_again_init(create_time * time_object)
 	
 
 }
+
 //定时器0中断函数
 void T0_time() interrupt 1
 {

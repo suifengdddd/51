@@ -30,16 +30,27 @@ void usart_init(create_usart *object)
 		 REN=1;
 		 EA=1;
 		 ES=1;
+		 ET1=0;//定时器中断运行位
 		 PCON=0x80;
 		 
 		 
 }
-static void my_printf(char*s)
+static void my_printf(char*s,uint8 number)
 {
-	printf("%s\n",s);
+	  uint8 i;
+	  ES=0;
+	  for(i=0;i<number;i++)
+		{
+			SBUF=s[i];
+			while(!TI);
+			TI=0;
+			
+		}
+		ES=1;
 }
 void _uasrt_interrupt() interrupt 4
 {
+	RI=0;
 	c51_usart.usart_rx_func_handle();
 }
 #endif
