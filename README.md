@@ -14,6 +14,8 @@
 >2022/9/14在master提交了实验1和实验2代码：[实验1](https://gitee.com/zou-jinqiang/51/tree/master/test1) [实验2](https://gitee.com/zou-jinqiang/51/tree/master/test2)
 
 >2022/9/17在master提交了实验6代码[实验6](https://gitee.com/zou-jinqiang/51/tree/master/test6)
+
+>2022/10/21在master提交了实验7AD转换代码[实验6](https://gitee.com/zou-jinqiang/51/tree/master/test6),并封增加了对ADC的支持
 ### 工程说明
 #### LED
 [LED任务要求](https://gitee.com/zou-jinqiang/51/blob/master/LED/51%E5%8D%95%E7%89%87%E6%9C%BA%E4%BB%BB%E5%8A%A11.pdf)
@@ -33,6 +35,7 @@
 
 #### test6
 [实验六实验要求](https://gitee.com/zou-jinqiang/51/blob/master/%E5%AE%9E%E7%8E%B06.png)
+
 
 #### 工程文件夹说明
 >CODE--存放各个模块的.c文件，定义有各模块使用函数
