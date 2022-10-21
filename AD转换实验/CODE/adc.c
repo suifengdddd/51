@@ -1,5 +1,4 @@
 #include "adc.h"
-#if ADC_
 static uint8 read_adc_value(void);
 static void begin_adc_change(void);
 	/**
@@ -58,4 +57,3 @@ static uint8 read_adc_value(void)
 
   return ret;
 }
-#endif

@@ -1,8 +1,7 @@
 #include "STC51.h"
-//注意本代码只打开了led和数码管，要打开其它外设请到STC51.h里配置
 #if TIME_
 create_time c51_time;
-//create_Timer *my_time;
+create_Timer *my_time;
 #endif
 #if KEY_
 create_key c51_key; 
@@ -33,10 +32,10 @@ create_temp c51_ds18b20;
 create_adc c51_adc;
 #endif
 
-void main()
+main()
 {
     
-	  uint8 i=0;
+	
 	  #if LED_
 	  led_init(&c51_led);
 	  #endif
@@ -87,33 +86,28 @@ adc_init(&c51_adc);
 		
 		while(1)
 		{
-			//led1开
-      c51_led.led_on(1);
-			delayms(500);
-			//led1关
-			c51_led.led_off(1);
-			delayms(500);
-			//填充数码管显示数组
-			c51_nixie_tube.arr[0]=i/100%10;
-			c51_nixie_tube.arr[1]=i/10%10;
-			c51_nixie_tube.arr[2]=i/1%10;
-			//调用数码管动态显示函数
-			c51_nixie_tube.dynamic_display(1,3,c51_nixie_tube.arr);
-			if(i<=999)
-			{
-				i++;
-			}
-			else
-			{
-				 i=0;
-			}
+			 //开始AD转换
+			 c51_adc.begin_adc_change();
+			 //判断转换是否完成(这里采用定时器中断实现,定时器定时周期为50ms)
+			 if(c51_adc.adc_flag==1)
+			 {
+				  //如果转换完成那就读取ADC的值
+					c51_adc.adc_val=c51_adc.read_adc_value();
+				  c51_adc.adc_flag=0;
+			 }
+			 //将读到的值赋值给数码管显示数组
+			 c51_nixie_tube.arr[0]=c51_adc.adc_val/100;
+	     c51_nixie_tube.arr[1]=c51_adc.adc_val%100/10;
+	     c51_nixie_tube.arr[2]=c51_adc.adc_val%10;
+			 //调用数码管动态显示函数显示ADC的值
+			// c51_nixie_tube.dynamic_display(1,3,c51_nixie_tube.arr);
+
 		}
 
 	
 		
 	
 }
-//串口接收中断回调函数
 #if USART
 void usart_rx_func_handle (void)
 {
@@ -124,7 +118,6 @@ void usart_rx_func_handle (void)
 	 }		 
 }
 #endif
-//定时器中断回调函数
 #if TIME_	 
 void time_run_func_handle(void)reentrant
 {
@@ -147,7 +140,7 @@ void time_run_func_handle(void)reentrant
 	else if(c51_time.time_type==TIME1)
 	{
    
-	   time1_i++;
+	   
 	
 	}
 	

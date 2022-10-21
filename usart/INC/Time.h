@@ -33,14 +33,14 @@ typedef struct my_time
   */
 	 void (*time_again_init)(struct my_time * time_object);
 }create_time;
-//typedef struct Timer
-//{
-//	create_time *time;
-//	uint16 time_ms_i;
-//  uint8 time_i;
-//	uint8 flag;
-//	uint8 (*time_out)(struct Timer*object);
-//}create_Timer;
+typedef struct Timer
+{
+	create_time *time;
+	uint16 time_ms_i;
+  uint8 time_i;
+	uint8 flag;
+	uint8 (*time_out)(struct Timer*object);
+}create_Timer;
 /**
   * @brief          初始化time对象
   * @param[in]      time_object：time对象指针

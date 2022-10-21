@@ -1,12 +1,6 @@
 #include "adc.h"
-#if ADC_
 static uint8 read_adc_value(void);
 static void begin_adc_change(void);
-	/**
-  * @brief          ADC对象初始化
-  * @param[in]      adc_object：adc对象指针
-  * @retval         NULL
-  */
 void adc_init(create_adc*adc_object)
 {
 	adc_object->read_adc_value=read_adc_value;
@@ -18,11 +12,6 @@ void adc_init(create_adc*adc_object)
 	P0=0x7f;
 	AD_U2=0;
 }
-	/**
-  * @brief          ADC开始AD转换
-  * @param[in]      NUUL
-  * @retval         NULL
-  */
 static void begin_adc_change(void)
 {
 		
@@ -37,11 +26,6 @@ static void begin_adc_change(void)
 	
 		
 }
-	/**
-  * @brief          读取AD转换的值
-  * @param[in]      NUUL
-  * @retval         ad转换的值（0-255）
-  */
 static uint8 read_adc_value(void)
 {
 	uint8 ret=0;
@@ -58,4 +42,3 @@ static uint8 read_adc_value(void)
 
   return ret;
 }
-#endif
