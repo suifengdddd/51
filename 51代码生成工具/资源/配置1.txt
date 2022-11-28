@@ -1,0 +1,6 @@
+单片机:天祥
+历程:None
+外设:SMG:LED:TIME:1:1:1
+定时器:TIME0:TIME0ON:50:TIME1:TIME1OFF:50
+串口:9600
+项目名字:数字时钟

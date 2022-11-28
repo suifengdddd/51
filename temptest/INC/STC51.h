@@ -16,7 +16,7 @@
 #define BEEP_   1   //18
 #define KEY_    1   //6
 #define SMG_    1   //19
-#define LED_    0   //22
+#define LED_    1   //22
 #define DS18B20_ 1
 
 #include <reg52.h>

@@ -70,7 +70,7 @@ void sms_control(void)
 			c51_nixie_tube.dynamic_display(1,5,hello_arr);
 		}
 }
-main()
+void main(void)
 {
 	
     
@@ -89,7 +89,7 @@ main()
 	  #endif
 #if TIME_	
     //打开定时器0		
-	  c51_time.time0=TIME0OFF;
+	  c51_time.time0=TIME0ON;
 		 //10ms一个中断
 	  c51_time.time0_ms=50;
 	  //关闭定时器1
@@ -151,20 +151,7 @@ void time_run_func_handle(void)
 	 
 	if(c51_time.time_type==TIME0)
 	{
-		
-	
-	}
-	else if(c51_time.time_type==TIME1)
-	{
-   
-     //步骤1 控制数码管
-	   if(time_sms_i==2&&sms_i>398)
-		 {
-			   sms_i--;
-			   time_sms_i=0;
-			
-		 }
-		 //控制led移动
+			//控制led移动
 		  if(time_led_i==5&&sms_i>398)
 		 {
 			   led_i++;
@@ -177,6 +164,27 @@ void time_run_func_handle(void)
 				 
 		 }
 		
+		  //控制led闪烁
+		  if(time_i==10&&time_3s_i<=60)
+		 {
+			 time_i=0;
+			 on_off=~on_off; 
+		 }
+		  time_led_i++;
+		 
+	}
+	else if(c51_time.time_type==TIME1)
+	{
+   
+     //步骤1 控制数码管
+	   if(time_sms_i==2&&sms_i>398)
+		 {
+			   sms_i--;
+			   time_sms_i=0;
+			
+		 }
+		 
+		
 		 //步骤2
 		 if(sms_i==398&&once==1)
 		 {
@@ -187,12 +195,7 @@ void time_run_func_handle(void)
 			  
 		 }
 		 
-		  //控制led闪烁
-		  if(time_i==10&&time_3s_i<=60)
-		 {
-			 time_i=0;
-			 on_off=~on_off; 
-		 }
+		 
 		 //步骤3显示Hell0
 		 if(time_3s_i==60)
 		 {
@@ -203,7 +206,6 @@ void time_run_func_handle(void)
 		 arr[4]=sms_i/10%10;
 		 arr[5]=sms_i/1%10;
 	   time_sms_i++;
-		 time_led_i++;
 		 time_i++;
 		 if(falg==1)
 		 {

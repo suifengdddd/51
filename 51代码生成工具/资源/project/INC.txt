@@ -1,0 +1,54 @@
+LED_
+              <File>
+              <FileName>LED.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\INC\LED.h</FilePath>
+            </File>
+KEY_
+            <File>
+              <FileName>KEY.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\INC\KEY.h</FilePath>
+            </File>
+BEEP_
+            <File>
+              <FileName>BEEP.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\INC\BEEP.h</FilePath>
+            </File>
+SMG_
+            <File>
+              <FileName>NixieTube.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\INC\NixieTube.h</FilePath>
+            </File>
+TIME_
+            <File>
+              <FileName>Time.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\INC\Time.h</FilePath>
+            </File>
+USART_
+            <File>
+              <FileName>usart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\INC\usart.h</FilePath>
+            </File>
+LCD1602_
+            <File>
+              <FileName>Lcd1602.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\INC\Lcd1602.h</FilePath>
+            </File>
+DS18B20_
+            <File>
+              <FileName>Ds18b20.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\INC\Ds18b20.h</FilePath>
+            </File>
+ADC_
+            <File>
+              <FileName>adc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\INC\adc.h</FilePath>
+            </File>

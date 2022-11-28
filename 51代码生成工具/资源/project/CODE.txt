@@ -1,0 +1,54 @@
+LED_
+              <File>
+              <FileName>LED.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\CODE\LED.c</FilePath>
+            </File>
+KEY_
+            <File>
+              <FileName>KEY.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\CODE\KEY.c</FilePath>
+            </File>
+BEEP_
+            <File>
+              <FileName>BEEP.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\CODE\BEEP.c</FilePath>
+            </File>
+SMG_
+            <File>
+              <FileName>NixieTube.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\CODE\NixieTube.c</FilePath>
+            </File>
+TIME_
+            <File>
+              <FileName>Time.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\CODE\Time.c</FilePath>
+            </File>
+USART_
+            <File>
+              <FileName>usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\CODE\usart.c</FilePath>
+            </File>
+LCD1602_
+            <File>
+              <FileName>Lcd1602.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\CODE\Lcd1602.c</FilePath>
+            </File>
+DS18B20_
+            <File>
+              <FileName>Ds18b20.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\CODE\Ds18b20.c</FilePath>
+            </File>
+ADC_
+            <File>
+              <FileName>adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\CODE\adc.c</FilePath>
+            </File>

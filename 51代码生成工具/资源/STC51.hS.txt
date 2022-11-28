@@ -1,0 +1,30 @@
+-------------STC51---------------
+#define STC51   0
+#define STC51   1
+LED_
+#define LED_       OPEN  //22
+#define LED_       CLOSE
+KEY_
+#define KEY_       OPEN//6
+#define KEY_       CLOSE//6
+SMG_
+#define SMG_       OPEN
+#define SMG_       CLOSE
+BEEP_
+#define BEEP_      OPEN
+#define BEEP_      CLOSE
+TIME_
+#define TIME_      OPEN
+#define TIME_      CLOSE
+USART_
+#define USART      OPEN
+#define USART      CLOSE
+DS18B20_
+#define DS18B20_   OPEN
+#define DS18B20_   CLOSE
+LCD1602_
+#define LCD1602_   OPEN
+#define LCD1602_   CLOSE
+ADC_
+#define ADC_       OPEN
+#define ADC_       CLOSE

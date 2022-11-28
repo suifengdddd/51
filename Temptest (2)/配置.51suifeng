@@ -1,0 +1,6 @@
+单片机:天翔
+历程:None
+外设:DS18B20:TIME:SMG:LED:KEY:BEEP:USART:1:1:1
+定时器:TIME0:TIME0ON:50:TIME1:TIME1OFF:50
+串口:9600
+项目名字:Temptest

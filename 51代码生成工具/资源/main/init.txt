@@ -1,0 +1,27 @@
+LED_
+    //实例化led对象
+    led_init(&c51_led);
+KEY_
+    //实例化按键对象
+    key_init(&c51_key);
+BEEP_
+    //实例化嗡鸣器对象
+    beep_init(&c51_beep);
+SMG_
+    //实例化数码管对象
+    nixie_tube_init(&c51_nixie_tube);
+TIME_
+    //实例化定时器对象
+    //打开定时器0:    c51_time.time0=:   //设置定时器0的中断周期:    c51_time.time0_ms=:   //关闭定时器1:    c51_time.time1=:   //设置定时器1的中断周期:    c51_time.time1_ms=:    c51_time.time_type=0;:    time_init(&c51_time);
+USART_
+    //实例化串口对象
+    c51_usart.baud_rate=:    usart_init(&c51_usart);
+LCD1602_
+    //实例化lcd1602对象
+    lcd1602_init(&c51_lcd1602);
+DS18B20_
+    //实例化ds18b20对象
+    temp_init(&c51_ds18b20);
+ADC_
+    //实例化adc对象
+    adc_init(&c51_adc);

@@ -1,0 +1,31 @@
+//定时器中断回调函数
+void time_run_func_handle(void)reentrant
+{
+	 static int time0_i=0;
+	 static int time1_i=0;
+	if(c51_time.time_type==TIME0)
+	{
+
+	    /* USER CODE BEGIN 4 While */
+     	/********用户代码实现*********/
+
+        /* USER CODE END 4 While */
+	    time0_i++;
+
+
+	}
+	else if(c51_time.time_type==TIME1)
+	{
+
+	 /* USER CODE BEGIN 5 While */
+     /********用户代码实现*********/
+
+     /* USER CODE END 5 While */
+	
+	   time1_i++;
+
+	}
+
+
+	c51_time.time_type=0;
+}

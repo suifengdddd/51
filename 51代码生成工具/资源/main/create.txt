@@ -1,0 +1,27 @@
+TIME_
+//创建定时器对象
+create_time c51_time;
+KEY_
+//创建按键对象
+create_key c51_key;
+LED_
+//创建led对象
+create_led c51_led;
+BEEP_
+//创建嗡鸣器对象
+create_beep c51_beep;
+SMG_
+//创建数码管对象
+create_nixie_tube c51_nixie_tube;
+USART_
+//创建串口对象
+create_usart c51_usart;
+LCD1602_
+//创建lcd1602对象
+create_lcd c51_lcd1602;
+DS18B20_
+//创建ds18b20对象
+create_temp c51_ds18b20;
+ADC_
+//创建adc对象
+create_adc c51_adc;

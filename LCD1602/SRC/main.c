@@ -72,12 +72,12 @@ temp_init(&c51_ds18b20);
 
 
    
-		c51_lcd1602.show_data("I LOVE CHINA!",0x80);
-		c51_lcd1602.show_data("WWW.TXMCU.COM",0x80+0x40);
+		c51_lcd1602.show_data("LiShuiXueYuan",0x80);
+		c51_lcd1602.show_data("QiangDaBiSai",0x80+0x40);
 		delayms(2000);
-		c51_lcd1602.write_com(0x01);
-		c51_lcd1602.show_data("Hello  everyone!",0x80);
-		c51_lcd1602.show_data("Welcome to here!",0x80+0x40);
+//		c51_lcd1602.write_com(0x01);
+//		c51_lcd1602.show_data("Hello  everyone!",0x80);
+//		c51_lcd1602.show_data("Welcome to here!",0x80+0x40);
 		
 		while(1)
 		{

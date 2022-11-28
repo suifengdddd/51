@@ -71,8 +71,10 @@ main()
 	while(1)
 	{
 	
+		EA=0;
     c51_temp.begin_temp_change();
 		c51_temp.get_temp(&c51_temp);
+		EA=1;
 		c51_key.key=c51_key.whitch_key_down(&c51_key);
 		if(c51_key.key==KEY3)
 		{
